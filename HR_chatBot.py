@@ -164,11 +164,19 @@ if st.session_state.get("exited"):
     st.stop()  
 
 
-# def _get_session_history(session_id: str) -> BaseChatMessageHistory:
-#     """Returns (or creates) the chat history for a given session."""
-#     if session_id not in st.session_state.store:
-#         st.session_state.store[session_id] = ChatMessageHistory()
-#     return st.session_state.store[session_id]
+# st.session_state.messages
+# Stores the chat display history as a list of (role, text) tuples.
+# Persists as long as the browser tab is open (until refresh/rerun)
+# Used purely to re-render chat bubbles on screen after each Streamlit rerun
+# Manually appended by you in the code
 
-# Display Chat History
+
+
+# st.session_state.chat_store
+# Stores LangChain message history objects, keyed by session_id
+
+# Contains structured HumanMessage and AIMessage objects (not plain text)
+# This is what gets passed as chat_history to the LLM
+# Auto-managed by RunnableWithMessageHistory — you don't append manually
+# Enables the LLM to remember previous turns and rephrase follow-up questions correctly
 
